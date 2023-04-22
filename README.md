@@ -85,3 +85,20 @@ VITE_SUPABASE_URL=【SupabaseのプロジェクトURL】
 VITE_SUPABASE_ANON_KEY=【Supabaseのプロジェクトanon key】
 VITE_OPENAI_KEY=【OpenAIのAPI key】
 ```
+
+### 検索対象ドキュメント追加
+
+```ドキュメント追加
+curl -X POST -H 'Content-Type: application/json; charset=UTF-8' http://localhost:【起動ポート番号】 -d '{"contents":【ドキュメント配列】, "metadata":【メタデータ配列】}'
+```
+
+### 検索
+
+
+```検索
+curl http://localhost:【起動ポート番号】/【検索キーワード】
+```
+
+### 参考
+
+- https://js.langchain.com/docs/modules/indexes/vector_stores/integrations/supabase
