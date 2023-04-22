@@ -107,6 +107,10 @@ curl http://localhost:【起動ポート番号】/【検索キーワード】/�
 
 - https://js.langchain.com/docs/modules/indexes/vector_stores/integrations/supabase
 
+### 注意
+
+- Node.js v16 では動きません。`fetch`を（試験的に）サポートする Node.js v18 以降で実行してください。
+
 ## テストデータ
 
 - [test-data.json](./test-data.json)
