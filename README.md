@@ -1,6 +1,6 @@
 # dbdev-langchain-test
 
-「第 41 回 PostgreSQL アンカンファレンス @ オンライン」 LT 発表用のサンプルです。
+「第 41 回 PostgreSQL アンカンファレンス @ オンライン」発表用のサンプルです。
 
 [dbdev](https://database.dev/) より、[embedding_search](https://database.dev/langchain/embedding_search) を試してみます。
 
