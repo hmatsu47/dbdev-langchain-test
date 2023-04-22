@@ -12,7 +12,7 @@ if (!url) throw new Error(`VITE_SUPABASE_URLが見つかりません`);
 const supabaseClient = createClient(url, supabaseKey);
 
 // 検索
-const search = async (keyword: string) => {
+const search = async (keyword: string, count: number) => {
   const vectorStore = await SupabaseVectorStore.fromExistingIndex(
     new OpenAIEmbeddings({
       openAIApiKey: import.meta.env.VITE_OPENAI_KEY,
@@ -23,7 +23,7 @@ const search = async (keyword: string) => {
       queryName: "match_documents",
     }
   );
-  const results = await vectorStore.similaritySearch(keyword, 1);
+  const results = await vectorStore.similaritySearch(keyword, count);
   return results;
 };
 
@@ -41,6 +41,10 @@ const postDocuments = async (body: { contents: string[]; metadata: Embeddings; }
       queryName: "match_documents",
     }
   );
+  const results = {
+    message: "OK"
+  }
+  return results;
 }
 
 // Express で Web API を起動
@@ -48,13 +52,13 @@ const app = express();
 
 app.use(express.json());
 
-app.get("/:keyword", async (req, res) => {
-  res.json(await search(req.params.keyword));
+app.get("/:keyword/:count", async (req, res) => {
+  res.json(await search(req.params.keyword, Number(req.params.count)));
 });
 
 app.post("/", async (req, res) => {
   const body = req.body;
-  const results = postDocuments(body);
+  const results = await postDocuments(body);
   res.json(results);
 });
 

@@ -100,9 +100,24 @@ curl -X POST -H 'Content-Type: application/json; charset=UTF-8' http://localhost
 
 
 ```検索
-curl http://localhost:【起動ポート番号】/【検索キーワード】
+curl http://localhost:【起動ポート番号】/【検索キーワード】/【結果の最大数】
 ```
 
 ### 参考
 
 - https://js.langchain.com/docs/modules/indexes/vector_stores/integrations/supabase
+
+## テストデータ
+
+- [test-data.json](./test-data.json)
+
+※ 日本 PostgreSQL ユーザ会に馴染みの深い方の著書 4 冊の紹介ページから引用しました。
+
+- 失敗から学ぶ RDBの正しい歩き方
+  - https://gihyo.jp/book/2019/978-4-297-10408-5
+- ［改訂3版］内部構造から学ぶPostgreSQL
+  - https://gihyo.jp/book/2022/978-4-297-13206-4
+- データベース初心者のためのPostgreSQL教室
+  - https://nextpublishing.jp/book/11673.html
+- これからはじめる PostgreSQL入門
+  - https://gihyo.jp/book/2018/978-4-7741-9814-9
