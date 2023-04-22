@@ -4,7 +4,6 @@
 
 [dbdev](https://database.dev/) より、[embedding_search](https://database.dev/langchain/embedding_search) を試してみます。
 
-
 ## Supabase プロジェクト
 
 SQL Editor で実行します。
@@ -66,6 +65,9 @@ create extension "langchain-embedding_search"
     version '1.0.0';
 ```
 
+- ここで`documents`というテーブル（vector store）と`match_documents`というストアドファンクションが生成される
+- `documents`テーブルは RLS 無効状態で生成されるので注意（それにあわせて、このサンプルでは anon key で Supabase に接続している）
+
 ### URL と anon key を確認
 
 API Setting で確認しておきます。
@@ -91,6 +93,8 @@ VITE_OPENAI_KEY=【OpenAIのAPI key】
 ```ドキュメント追加
 curl -X POST -H 'Content-Type: application/json; charset=UTF-8' http://localhost:【起動ポート番号】 -d '{"contents":【ドキュメント配列】, "metadata":【メタデータ配列】}'
 ```
+
+- 入力値チェックなどは実装していないので注意（ドキュメント配列の要素数とメタデータ配列の要素数は一致させる）
 
 ### 検索
 
