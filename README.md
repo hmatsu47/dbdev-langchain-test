@@ -94,7 +94,7 @@ VITE_OPENAI_KEY=【OpenAIのAPI key】
 curl -X POST -H 'Content-Type: application/json; charset=UTF-8' http://localhost:【起動ポート番号】 -d '{"contents":【ドキュメント配列】, "metadata":【メタデータ配列】}'
 ```
 
-- 入力値チェックなどは実装していないので注意（ドキュメント配列の要素数とメタデータ配列の要素数は一致させる）
+- ドキュメント追加に限らず、全体的に入力値チェックなどは実装していないので注意（ドキュメント配列の要素数とメタデータ配列の要素数は一致させる）
 
 ### 検索
 
