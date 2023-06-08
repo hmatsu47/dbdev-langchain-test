@@ -68,6 +68,40 @@ create extension "langchain-embedding_search"
 - ここで`documents`というテーブル（vector store）と`match_documents`というストアドファンクションが生成される
 - `documents`テーブルは RLS 無効状態で生成されるので注意（それにあわせて、このサンプルでは anon key で Supabase に接続している）
 
+`langchain-embedding_search`バージョン 1.0.0 が対応するのは`langchainjs`バージョン0.0.87 まで。
+ただし 2023/6/8 現在、`langchain-embedding_search`バージョン 1.1.0 がうまく有効化できないので、`langchainjs`バージョン 0.0.88 以降を使うには、引数`filter`が追加された新しい`match_documents`ストアドファンクションを手動で追加する。
+
+```sql:match_documentsストアドファンクション（filter付き）
+create function match_documents (
+  query_embedding vector(1536),
+  match_count int DEFAULT null,
+  filter jsonb DEFAULT '{}'
+) returns table (
+  id bigint,
+  content text,
+  metadata jsonb,
+  similarity float
+)
+language plpgsql
+as $$
+#variable_conflict use_column
+begin
+  return query
+  select
+    id,
+    content,
+    metadata,
+    1 - (documents.embedding <=> query_embedding) as similarity
+  from documents
+  where metadata @> filter
+  order by documents.embedding <=> query_embedding
+  limit match_count;
+end;
+$$;
+```
+
+※このワークアラウンドで対応した場合、`langchain-embedding_search`バージョン 1.1.0 が有効化できるようになったときは、この`match_documents`ストアドファンクションを手動で削除してから有効化する。
+
 ### URL と anon key を確認
 
 API Setting で確認しておきます。
