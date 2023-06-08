@@ -1,15 +1,19 @@
 import express from "express";
 import { SupabaseVectorStore } from "langchain/vectorstores/supabase";
 import { OpenAIEmbeddings } from "langchain/embeddings/openai";
-import { createClient } from "@supabase/supabase-js";
+import { createClient, SupabaseClientOptions } from "@supabase/supabase-js";
 import { Embeddings } from "langchain/dist/embeddings/base";
 
 const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 if (!supabaseKey) throw new Error(`VITE_SUPABASE_ANON_KEYが見つかりません`);
 const url = import.meta.env.VITE_SUPABASE_URL;
 if (!url) throw new Error(`VITE_SUPABASE_URLが見つかりません`);
+const options = {
+  auth: {
+    persistSesion: false }
+  } as SupabaseClientOptions<"public">;
 
-const supabaseClient = createClient(url, supabaseKey);
+const supabaseClient = createClient(url, supabaseKey, options);
 
 // 検索
 const search = async (keyword: string, count: number) => {
